@@ -1,5 +1,5 @@
 import React from 'react';
-import useState from 'react';
+import {useState} from 'react';
 
 export default function TipCalculator() {
   const [bill, setBill] = useState(50);
@@ -27,29 +27,34 @@ export default function TipCalculator() {
   const calculateTip = () => {
     const totalTip = bill * (tip * .01);
 
-    return totalTip;
+    if (totalTip == 0) {
+      return '-'
+    } else {
+      return '$' + totalTip.toFixed(2);
+    }
   }
 
   const calculateTipPerPerson = () => {
     const totalTip = bill * (tip * .01);
     const tipPerPerson = totalTip / people;
 
-    return tipPerPerson;
+    if (tipPerPerson == 0) {
+      return '-'
+    } else {
+      return '$' + tipPerPerson.toFixed(2);
+    }
   }
 
   return (
     <>
-      <label>Bill
-          <input type='number' onChange={handleBill} value={bill}></input>
-      </label>
-      <label>Tip Percentage
-          <input type='number' onChange={handleTip} value={tip}></input>
-      </label>
-      <label>Number of People
-          <input type='number' onChange={handlePeople} value={people}></input>
-      </label>
-      <p>Total Tip: ${calculateTip()}</p>
-      <p>Tip Per Person: ${calculateTipPerPerson()}</p>
+      <label htmlFor='bill'>Bill</label>
+      <input id='bill' type='number' onChange={handleBill} value={bill}></input>
+      <label htmlFor='tip'>Tip Percentage</label>
+      <input id='tip' type='number' onChange={handleTip} value={tip}></input>
+      <label htmlFor='people'>Number of People</label>
+      <input id='people' type='number' onChange={handlePeople} value={people}></input>
+      <p>Total Tip: {calculateTip()}</p>
+      <p>Tip Per Person: {calculateTipPerPerson()}</p>
     </>
   );
 }
